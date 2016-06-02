@@ -36,6 +36,8 @@ Route::get('/', function () {
 
 Route::post("/webhook", function (Request $request) {
 
+    Log::info(serialize($request->all()));
+
     $query = http_build_query(['access_token' => PAGE_TOKEN]);
     $uri = MESSAGE_URL . "?$query";
 
