@@ -70,7 +70,7 @@ function createMessageData(): array
                     [
                         "title"     => "First card",
                         "subtitle"  => "Element #1 of an hscroll",
-                        "image_url" => "http=>//messengerdemo.parseapp.com/img/rift.png",
+                        "image_url" => "http://messengerdemo.parseapp.com/img/rift.png",
                         "buttons"   => [
                             [
                                 "type"  => "web_url",

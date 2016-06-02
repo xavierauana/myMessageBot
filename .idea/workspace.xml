@@ -25,12 +25,12 @@
       <file leaf-file-name="routes.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
-              <caret line="96" column="26" selection-start-line="96" selection-start-column="26" selection-end-line="96" selection-end-column="26" />
+            <state relative-caret-position="333">
+              <caret line="72" column="45" selection-start-line="72" selection-start-column="45" selection-end-line="72" selection-end-column="45" />
               <folding>
                 <element signature="e#394#436#0#PHP" expanded="true" />
-                <element signature="e#2429#2965#1#PHP" expanded="false" />
-                <element signature="e#3262#3558#1#PHP" expanded="false" />
+                <element signature="e#2428#2964#1#PHP" expanded="false" />
+                <element signature="e#3261#3557#1#PHP" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -253,12 +253,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1464852974906</updated>
-      <workItem from="1464852976402" duration="12417000" />
+      <workItem from="1464852976402" duration="12488000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12417000" />
+    <option name="totallyTimeSpent" value="12488000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="773" extended-state="6" />
@@ -356,12 +356,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="96" column="26" selection-start-line="96" selection-start-column="26" selection-end-line="96" selection-end-column="26" />
+        <state relative-caret-position="333">
+          <caret line="72" column="45" selection-start-line="72" selection-start-column="45" selection-end-line="72" selection-end-column="45" />
           <folding>
             <element signature="e#394#436#0#PHP" expanded="true" />
-            <element signature="e#2429#2965#1#PHP" expanded="false" />
-            <element signature="e#3262#3558#1#PHP" expanded="false" />
+            <element signature="e#2428#2964#1#PHP" expanded="false" />
+            <element signature="e#3261#3557#1#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
