@@ -50,7 +50,8 @@ Route::post("/webhook", function (Request $request) {
     $client = new \GuzzleHttp\Client();
 
     $request = new \GuzzleHttp\Psr7\Request("POST", $uri, [
-        'json' => json_encode($data)
+        'query'=>['access_token'=>PAGE_TOKEN],
+        'body' => json_encode($data)
     ]);
 
     $promise = $client->sendAsync($request)->then(
