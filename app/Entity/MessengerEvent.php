@@ -36,7 +36,7 @@ class MessengerEvent
     {
         for($i = 0; $i<count($this->event); $i++){
             if($this->isIncomingMessageEvent($this->event[$i])){
-                $this->incomingMessage[] = new IncomingMessage($this->event, $i);
+                $this->incomingMessage[] = new IncomingMessage($this->request, $i);
             }
         }
     }
