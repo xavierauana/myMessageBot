@@ -25,8 +25,13 @@ const MESSAGE_URL = "https://graph.facebook.com/v2.6/me/messages";
  * @param                          $incomingMessage
  * @param                          $uri
  */
-function replyMessage(Request $request, $incomingMessage, $uri)
+function replyMessage($incomingMessage, $uri)
 {
+    $query = http_build_query(['access_token' => PAGE_TOKEN]);
+    $uri = MESSAGE_URL . "?$query";
+
+    Log::info($uri);
+
     $messageData = [
         'text' => $incomingMessage->message
     ];
@@ -78,17 +83,14 @@ Route::get('/', function () {
 Route::post("/webhook", function (Request $request) {
 
     Log::info(serialize($request->all()));
-    
-    $incomingMessage = new \App\Entity\IncomingMessage($request);
+    $event = new \App\Entity\MessengerEvent($request);
+    $incomingMessages = $event->getIncomingMessage();
 
-    if($incomingMessage->message){
-
-        $query = http_build_query(['access_token' => PAGE_TOKEN]);
-        $uri = MESSAGE_URL . "?$query";
-        Log::info(serialize($incomingMessage));
-        Log::info($uri);
-
-        replyMessage($request, $incomingMessage, $uri);
+    if(count($incomingMessages)){
+        foreach ($incomingMessages as $message){
+            Log::info(serialize($message));
+            replyMessage($message);
+        }
     }
 
     return response(null, 200);

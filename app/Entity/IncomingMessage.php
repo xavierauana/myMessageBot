@@ -8,11 +8,11 @@
 namespace App\Entity;
 
 
-
 use Illuminate\Http\Request;
 
 class IncomingMessage
 {
+    private $index;
     public $object;
     public $entryId;
     public $entryTime;
@@ -26,51 +26,51 @@ class IncomingMessage
     private $messagingEvents = [];
 
 
-    public function __construct(Request $request) {
-        $this->messagingEvents =   $request->get('entry')[0]['messaging'];
+    public function __construct(Request $request, $index = 0)
+    {
+        $this->index = $index;
+        $this->messagingEvents = $request->get('entry')[$index]['messaging'];
 
         $this->entryId = $this->getEntryId($request);
         $this->entryTime = $this->getEntryTime($request);
         $this->object = $this->getObject($request);
 
-        if($this->isIncomingMessage()){
-            $this->message = $this->getMessage();
-            $this->messageId = $this->getMessageId();
-            $this->messageSeq = $this->getMessageSeq();
-            $this->messageTime = $this->getMessageTime();
-        }
+        $this->message = $this->getMessage();
+        $this->messageId = $this->getMessageId();
+        $this->messageSeq = $this->getMessageSeq();
+        $this->messageTime = $this->getMessageTime();
         $this->recipientId = $this->getRecipientId();
         $this->senderId = $this->getSenderId();
     }
 
     private function getEntryId($request)
     {
-        return $request->get('entry')[0]['id'];
+        return $request->get('entry')[$this - $this->index]['id'];
     }
 
     private function getEntryTime($request)
     {
-        return $request->get('entry')[0]['time'];
+        return $request->get('entry')[$this->index]['time'];
     }
 
     private function getMessage()
     {
-        return $this->messagingEvents[0]['message']['text'];
+        return $this->messagingEvents[$this->index]['message']['text'];
     }
 
     private function getMessageId()
     {
-        return $this->messagingEvents[0]['message']['mid'];
+        return $this->messagingEvents[$this->index]['message']['mid'];
     }
 
     private function getMessageSeq()
     {
-        return $this->messagingEvents[0]['message']['seq'];
+        return $this->messagingEvents[$this->index]['message']['seq'];
     }
 
     private function getMessageTime()
     {
-        return $this->messagingEvents[0]['timestamp'];
+        return $this->messagingEvents[$this->index]['timestamp'];
     }
 
     private function getObject($request)
@@ -80,18 +80,12 @@ class IncomingMessage
 
     private function getRecipientId()
     {
-        return $this->messagingEvents[0]['recipient']['id'];
+        return $this->messagingEvents[$this->index]['recipient']['id'];
     }
 
     private function getSenderId()
     {
-        return $this->messagingEvents[0]['sender']['id'];
+        return $this->messagingEvents[$this->index]['sender']['id'];
     }
-
-    private function isIncomingMessage()
-    {
-        return isset($this->messagingEvents[0]['message']) and isset($this->messagingEvents[0]['message']['text']);
-    }
-
 
 }
