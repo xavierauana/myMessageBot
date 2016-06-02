@@ -28,6 +28,7 @@ Route::post("/webhook", function(Request $request){
 
 Route::get("/webhook", function(Request $request){
     if($request->get("hub.verify_token") === VERIFY_TOKEN){
+        return $request->get("hub.verify_token");
         return $request->get("hub.challenge");
     }
     return "Error, wrong validation token";
