@@ -37,8 +37,8 @@ class IncomingMessage
             $this->message = $this->getMessage();
             $this->messageId = $this->getMessageId();
             $this->messageSeq = $this->getMessageSeq();
+            $this->messageTime = $this->getMessageTime();
         }
-        $this->messageTime = $this->getMessageTime();
         $this->recipientId = $this->getRecipientId();
         $this->senderId = $this->getSenderId();
     }
