@@ -11,8 +11,6 @@
 |
 */
 
-
-
 use Illuminate\Http\Request;
 
 const VERIFY_TOKEN = "B45ycLXmHCqDNuPwybTZCYoInhHEiAJbuGkZC2kwVv4eC41ISgYcNmkKpZC5W9Tl3sASpQZDZD";
