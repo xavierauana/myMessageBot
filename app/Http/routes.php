@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Rotue::post("/webhook", function(Request $request){
+Route::post("/webhook", function(Request $request){
     if($request->has("hub.verify_token") === VERIFY_TOKEN){
         return $request->get("hub.challenge");
     }
