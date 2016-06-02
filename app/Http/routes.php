@@ -27,7 +27,7 @@ Route::get('/', function () {
 });
 
 Route::post("/webhook", function(Request $request){
-    
+
     $query = http_build_query(['access_token'=>PAGE_TOKEN]);
     $uri = MESSAGE_URL."?$query";
 
@@ -50,9 +50,13 @@ Route::post("/webhook", function(Request $request){
         'json'=>json_encode($data)
     ]);
 
-    $client->sendAsync($request)->then(function($response){
+    $promise = $client->sendAsync($request)->then(function($response){
         Log::info(serialize($response));
+    }, function(){
+        Log::info("something wrong!!");
     });
+
+    $promise->wait();
 
     return response(null, 200);
 });
