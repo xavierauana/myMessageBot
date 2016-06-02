@@ -25,3 +25,10 @@ Route::post("/webhook", function(Request $request){
     }
     return "Error, wrong validation token";
 });
+
+Route::get("/webhook", function(Request $request){
+    if($request->has("hub.verify_token") === VERIFY_TOKEN){
+        return $request->get("hub.challenge");
+    }
+    return "Error, wrong validation token";
+});
