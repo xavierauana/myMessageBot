@@ -49,22 +49,22 @@ class IncomingMessage
 
     private function getMessage($request)
     {
-        return $request->get('entry')[0]['messaging']['message']['text'];
+        return $request->get('entry')[0]['messaging'][0][0]['message']['text'];
     }
 
     private function getMessageId($request)
     {
-        return $request->get('entry')[0]['messaging']['message']['mid'];
+        return $request->get('entry')[0]['messaging'][0]['message']['mid'];
     }
 
     private function getMessageSeq($request)
     {
-        return $request->get('entry')[0]['messaging']['message']['seq'];
+        return $request->get('entry')[0]['messaging'][0]['message']['seq'];
     }
 
     private function getMessageTime($request)
     {
-        return $request->get('entry')[0]['messaging']['timestamp'];
+        return $request->get('entry')[0]['messaging'][0]['timestamp'];
     }
 
     private function getObject($request)
@@ -74,12 +74,12 @@ class IncomingMessage
 
     private function getRecipientId($request)
     {
-        return $request->get('entry')[0]['messaging']['recipient']['id'];
+        return $request->get('entry')[0]['messaging'][0]['recipient']['id'];
     }
 
     private function getSenderId($request)
     {
-        return $request->get('entry')[0]['messaging']['sender']['id'];
+        return $request->get('entry')[0]['messaging'][0]['sender']['id'];
     }
 
 
