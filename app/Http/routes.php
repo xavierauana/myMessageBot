@@ -44,7 +44,9 @@ Route::post("/webhook", function (Request $request) {
     Log::info(serialize($incomingMessage));
     Log::info($uri);
 
-    $messageData = $incomingMessage->message;
+    $messageData = [
+        'text'=>$incomingMessage->message
+    ];
     $senderId = $incomingMessage->senderId;
 
     $data = [
