@@ -45,7 +45,7 @@ class IncomingMessage
 
     private function getEntryId($request)
     {
-        return $request->get('entry')[$this - $this->index]['id'];
+        return $request->get('entry')[$this->index]['id'];
     }
 
     private function getEntryTime($request)
