@@ -21,11 +21,9 @@ const PAGE_TOKEN = "EAAWKZCVRmZBbwBAHgw5elHvQj3jzHrYpKqkrcfLi1FfZCpHN21T15gQZCEZ
 const MESSAGE_URL = "https://graph.facebook.com/v2.6/me/messages";
 
 /**
- * @param \Illuminate\Http\Request $request
  * @param                          $incomingMessage
- * @param                          $uri
  */
-function replyMessage($incomingMessage, $uri)
+function replyMessage($incomingMessage)
 {
     $query = http_build_query(['access_token' => PAGE_TOKEN]);
     $uri = MESSAGE_URL . "?$query";
