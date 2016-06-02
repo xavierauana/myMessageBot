@@ -29,7 +29,7 @@ class IncomingMessage
     public function __construct(Request $request, $index = 0)
     {
         $this->index = $index;
-        $this->messagingEvents = $request->get('entry')[$index]['messaging'];
+        $this->messagingEvents = $request->get('entry')[0]['messaging'];
 
         $this->entryId = $this->getEntryId($request);
         $this->entryTime = $this->getEntryTime($request);
@@ -45,12 +45,12 @@ class IncomingMessage
 
     private function getEntryId($request)
     {
-        return $request->get('entry')[$this->index]['id'];
+        return $request->get('entry')[0]['id'];
     }
 
     private function getEntryTime($request)
     {
-        return $request->get('entry')[$this->index]['time'];
+        return $request->get('entry')[0]['time'];
     }
 
     private function getMessage()
