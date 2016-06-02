@@ -20,21 +20,27 @@ class IncomingMessage
     public $recipientId;
     public $objectTime;
     public $messageTime;
-    public $messageId;
-    public $messageSeq;
-    public $message;
+    public $messageId = null;
+    public $messageSeq = null;
+    public $message = null;
+    private $messagingEvents = [];
 
 
     public function __construct(Request $request) {
+        $this->messagingEvents =   $request->get('entry')[0]['messaging'];
+
         $this->entryId = $this->getEntryId($request);
         $this->entryTime = $this->getEntryTime($request);
-        $this->message = $this->getMessage($request);
-        $this->messageId = $this->getMessageId($request);
-        $this->messageSeq = $this->getMessageSeq($request);
-        $this->messageTime = $this->getMessageTime($request);
         $this->object = $this->getObject($request);
-        $this->recipientId = $this->getRecipientId($request);
-        $this->senderId = $this->getSenderId($request);
+
+        if($this->isIncomingMessage()){
+            $this->message = $this->getMessage();
+            $this->messageId = $this->getMessageId();
+            $this->messageSeq = $this->getMessageSeq();
+        }
+        $this->messageTime = $this->getMessageTime();
+        $this->recipientId = $this->getRecipientId();
+        $this->senderId = $this->getSenderId();
     }
 
     private function getEntryId($request)
@@ -47,24 +53,24 @@ class IncomingMessage
         return $request->get('entry')[0]['time'];
     }
 
-    private function getMessage($request)
+    private function getMessage()
     {
-        return $request->get('entry')[0]['messaging'][0]['message']['text'];
+        return $this->messagingEvents[0]['message']['text'];
     }
 
-    private function getMessageId($request)
+    private function getMessageId()
     {
-        return $request->get('entry')[0]['messaging'][0]['message']['mid'];
+        return $this->messagingEvents[0]['message']['mid'];
     }
 
-    private function getMessageSeq($request)
+    private function getMessageSeq()
     {
-        return $request->get('entry')[0]['messaging'][0]['message']['seq'];
+        return $this->messagingEvents[0]['message']['seq'];
     }
 
-    private function getMessageTime($request)
+    private function getMessageTime()
     {
-        return $request->get('entry')[0]['messaging'][0]['timestamp'];
+        return $this->messagingEvents[0]['timestamp'];
     }
 
     private function getObject($request)
@@ -72,14 +78,19 @@ class IncomingMessage
         return $request->get('object');
     }
 
-    private function getRecipientId($request)
+    private function getRecipientId()
     {
-        return $request->get('entry')[0]['messaging'][0]['recipient']['id'];
+        return $this->messagingEvents[0]['recipient']['id'];
     }
 
-    private function getSenderId($request)
+    private function getSenderId()
     {
-        return $request->get('entry')[0]['messaging'][0]['sender']['id'];
+        return $this->messagingEvents[0]['sender']['id'];
+    }
+
+    private function isIncomingMessage()
+    {
+        return isset($this->messagingEvents[0]['message']) and isset($this->messagingEvents[0]['message']['text']);
     }
 
 
