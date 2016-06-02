@@ -16,17 +16,12 @@ use Illuminate\Support\Facades\Log;
 
 const VERIFY_TOKEN = "B45ycLXmHCqDNuPwybTZCYoInhHEiAJbuGkZC2kwVv4eC41ISgYcNmkKpZC5W9Tl3sASpQZDZD";
 
-function convert_multi_array($array) {
-    $out = implode("&",array_map(function($a) {return implode("~",$a);},$array));
-    return $out;
-}
-
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::post("/webhook", function(Request $request){
-    Log::info(convert_multi_array($request->all()));
+    Log::info(serialize($request->all()));
     return response(null, 200);
 });
 
