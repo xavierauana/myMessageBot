@@ -49,7 +49,7 @@ class IncomingMessage
 
     private function getMessage($request)
     {
-        return $request->get('entry')[0]['messaging'][0][0]['message']['text'];
+        return $request->get('entry')[0]['messaging'][0]['message']['text'];
     }
 
     private function getMessageId($request)
