@@ -67,7 +67,6 @@ Route::post("/webhook", function (Request $request) {
             Log::info(serialize($response->getStatusCode()));
         },
         function (RequestException $response) {
-            Log::info(serialize($response->getRequest()));
             Log::info(serialize($response->getMessage()));
         });
 
