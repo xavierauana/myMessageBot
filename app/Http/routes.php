@@ -52,8 +52,8 @@ Route::post("/webhook", function(Request $request){
 
     $promise = $client->sendAsync($request)->then(function($response){
         Log::info(serialize($response));
-    }, function(){
-        Log::info("something wrong!!");
+    }, function($response){
+        Log::info(serialize($response));
     });
 
     $promise->wait();
