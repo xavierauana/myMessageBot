@@ -12,6 +12,7 @@
 */
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 const VERIFY_TOKEN = "B45ycLXmHCqDNuPwybTZCYoInhHEiAJbuGkZC2kwVv4eC41ISgYcNmkKpZC5W9Tl3sASpQZDZD";
 
@@ -21,7 +22,8 @@ Route::get('/', function () {
 });
 
 Route::post("/webhook", function(Request $request){
-    return $request->all();
+    Log::info(implode(";",$request->all()));
+    return response(null, 200);
 });
 
 Route::get("/webhook", function(Request $request){
