@@ -27,6 +27,7 @@ Route::get('/', function () {
 });
 
 Route::post("/webhook", function(Request $request){
+    
     $query = http_build_query(['access_token'=>PAGE_TOKEN]);
     $uri = MESSAGE_URL."?$query";
 
@@ -46,7 +47,7 @@ Route::post("/webhook", function(Request $request){
     $client = new \GuzzleHttp\Client();
 
     $request = new \GuzzleHttp\Psr7\Request("POST", $uri,[
-        'json'=>$data
+        'json'=>json_encode($data)
     ]);
 
     $client->sendAsync($request)->then(function($response){
