@@ -30,9 +30,7 @@ function replyMessage($incomingMessage)
 
     Log::info($uri);
 
-    $messageData = [
-        'text' => $incomingMessage->message
-    ];
+    $messageData = createMessageData();
     $senderId = $incomingMessage->senderId;
 
     $data = [
@@ -61,21 +59,52 @@ function replyMessage($incomingMessage)
     $promise->wait();
 }
 
+function createMessageData(): array
+{
+    return [
+        "attachment" => [
+            "type"    => "template",
+            "payload" => [
+                "template_type" => "generic",
+                "elements"      => [
+                    [
+                        "title"     => "First card",
+                        "subtitle"  => "Element #1 of an hscroll",
+                        "image_url" => "http=>//messengerdemo.parseapp.com/img/rift.png",
+                        "buttons"   => [
+                            [
+                                "type"  => "web_url",
+                                "url"   => "https://www.messenger.com/",
+                                "title" => "Web url"
+                            ],
+                            [
+                                "type"    => "postback",
+                                "title"   => "Postback",
+                                "payload" => "Payload for first element in a generic bubble",
+                            ]
+                        ]
+                    ],
+                    [
+                        "title"     => "Second card",
+                        "subtitle"  => "Element #2 of an hscroll",
+                        "image_url" => "http://messengerdemo.parseapp.com/img/gearvr.png",
+                        "buttons"   => [
+                            [
+                                "type"    => "postback",
+                                "title"   => "Postback",
+                                "payload" => "Payload for second element in a generic bubble",
+                            ]
+                        ],
+                    ]
+                ]
+            ]
+        ]
+    ];
+}
+
 
 Route::get('/', function () {
-//    $data = [
-//        "recipient" => ["id" => '121212'],
-//        "message"   => "something"
-//    ];
-//    dd(json_encode($data));
-
-    dd(unserialize('a:2:{s:6:"object";s:4:"page";s:5:"entry";a:1:{i:0;a:3:{s:2:"id";s:16:"1768147536755704";s:4:"time";i:1464864778859;s:9:"messaging";a:1:{i:0;a:3:{s:6:"sender";a:1:{s:2:"id";s:17:"10154043934195239";}s:9:"recipient";a:1:{s:2:"id";s:16:"1768147536755704";}s:8:"delivery";a:3:{s:4:"mids";a:1:{i:0;s:36:"mid.1464864510338:db78190ee08583c891";}s:9:"watermark";i:1464864510348;s:3:"seq";i:32;}}}}}}'));
-
-    dd(unserialize('a:2:{s:6:"object";s:4:"page";s:5:"entry";a:1:{i:0;a:3:{s:2:"id";s:16:"1768147536755704";s:4:"time";i:1464856644718;s:9:"messaging";a:1:{i:0;a:4:{s:6:"sender";a:1:{s:2:"id";s:17:"10154043934195239";}s:9:"recipient";a:1:{s:2:"id";s:16:"1768147536755704";}s:9:"timestamp";i:1464856166415;s:7:"message";a:3:{s:3:"mid";s:36:"mid.1464856166394:6e359cd0890102d746";s:3:"seq";i:6;s:4:"text";s:7:"another";}}}}}}  
-[2016-06-02 08:37:25] local.INFO: a:2:{s:6:"object";s:4:"page";s:5:"entry";a:1:{i:0;a:3:{s:2:"id";s:16:"1768147536755704";s:4:"time";i:1464856645371;s:9:"messaging";a:2:{i:0;a:4:{s:6:"sender";a:1:{s:2:"id";s:17:"10154043934195239";}s:9:"recipient";a:1:{s:2:"id";s:16:"1768147536755704";}s:9:"timestamp";i:1464856330413;s:7:"message";a:3:{s:3:"mid";s:36:"mid.1464856330405:8fd459117e0126cc73";s:3:"seq";i:7;s:4:"text";s:3:"try";}}i:1;a:4:{s:6:"sender";a:1:{s:2:"id";s:17:"10154043934195239";}s:9:"recipient";a:1:{s:2:"id";s:16:"1768147536755704";}s:9:"timestamp";i:1464856620897;s:7:"message";a:3:{s:3:"mid";s:36:"mid.1464856620889:261ec172250e728f67";s:3:"seq";i:8;s:4:"text";s:12:"anothere try";}}}}}}  
-'));
-
-    return view('welcome');
+    return "message bot";
 });
 
 Route::post("/webhook", function (Request $request) {
@@ -84,8 +113,8 @@ Route::post("/webhook", function (Request $request) {
     $event = new \App\Entity\MessengerEvent($request);
     $incomingMessages = $event->getIncomingMessage();
 
-    if(count($incomingMessages)){
-        foreach ($incomingMessages as $message){
+    if (count($incomingMessages)) {
+        foreach ($incomingMessages as $message) {
             Log::info(serialize($message));
             replyMessage($message);
         }
