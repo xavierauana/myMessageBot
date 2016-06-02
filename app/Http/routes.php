@@ -27,22 +27,32 @@ Route::get('/', function () {
 });
 
 Route::post("/webhook", function(Request $request){
+    $query = http_build_query(['access_token'=>PAGE_TOKEN]);
+    $uri = MESSAGE_URL."?$query";
+
     $incomingMessage = new \App\Entity\IncomingMessage($request);
+
     Log::info(serialize( $incomingMessage ));
-    $messageData = "hello";
+    Log::info($uri);
+
+    $messageData = $incomingMessage->message;
     $senderId = $incomingMessage->senderId;
+
     $data = [
-        "recipient"=> ["id"=>$senderId],
+        "recipient"=> [ "id"=>$senderId ],
         "message"=> $messageData
     ];
-    $query = http_build_query(['access_token'=>PAGE_TOKEN]);
+
     $client = new \GuzzleHttp\Client();
-    $request = new \GuzzleHttp\Psr7\Request("POST", MESSAGE_URL."?$query",[
+
+    $request = new \GuzzleHttp\Psr7\Request("POST", $uri,[
         'json'=>$data
     ]);
+
     $client->sendAsync($request)->then(function($response){
         Log::info(serialize($response));
     });
+
     return response(null, 200);
 });
 
