@@ -54,6 +54,8 @@ Route::post("/webhook", function (Request $request) {
         'query'=>['access_token'=>PAGE_TOKEN],
         'body' => json_encode($data)
     ]);
+    
+    Log::info($request);
 
     $promise = $client->sendAsync($request)->then(
         function (ResponseInterface $response) {
