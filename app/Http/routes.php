@@ -34,7 +34,7 @@ function replyMessage($incomingMessage)
 
     $senderId = $incomingMessage->senderId;
 
-    $data = new Req($senderId, "image", "https://www.nasa.gov/sites/default/files/styles/image_card_4x3_ratio/public/thumbnails/image/leisa_christmas_false_color.png?itok=Jxf0IlS4", "ca");
+    $data = new Req($senderId, "image", "https://www.nasa.gov/sites/default/files/styles/image_card_4x3_ratio/public/thumbnails/image/leisa_christmas_false_color.png?itok=Jxf0IlS4");
 
 
     $messageData = createMessageData();

@@ -11,6 +11,7 @@ namespace App\Message;
 class Image
 {
     public $attachment;
+    public $payload=[];
 
     /**
      * Template constructor.
@@ -19,6 +20,6 @@ class Image
     public function __construct(string $imageUrl)
     {
         $this->attachment['type'] = 'image';
-        $this->attachment['url'] = $imageUrl;
+        $this->payload['url'] = $imageUrl;
     }
 }
