@@ -11,8 +11,10 @@
 |
 */
 
+use App\Enums\AttachmentType;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
+use App\Request as Req;
 use Illuminate\Support\Facades\Log;
 use Psr\Http\Message\ResponseInterface;
 
@@ -30,13 +32,17 @@ function replyMessage($incomingMessage)
 
     Log::info($uri);
 
-    $messageData = createMessageData();
     $senderId = $incomingMessage->senderId;
 
-    $data = [
-        "recipient" => ["id" => $senderId],
-        "message"   => $messageData
-    ];
+    $data = new Req($senderId, "image", "https://www.nasa.gov/sites/default/files/styles/image_card_4x3_ratio/public/thumbnails/image/leisa_christmas_false_color.png?itok=Jxf0IlS4", "ca");
+
+
+    $messageData = createMessageData();
+
+//    $data = [
+//        "recipient" => ["id" => $senderId],
+//        "message"   => $messageData
+//    ];
 
     $options = [
         'content-type' => "application/json; charset=utf8",
@@ -90,6 +96,7 @@ function createMessageData(): array
                         "image_url" => "http://messengerdemo.parseapp.com/img/gearvr.png",
                         "buttons"   => [
                             [
+
                                 "type"    => "postback",
                                 "title"   => "Postback",
                                 "payload" => "Payload for second element in a generic bubble",
@@ -104,9 +111,11 @@ function createMessageData(): array
 
 
 Route::get('/', function () {
+    dd(json_encode(new Req(121212121, "image", "https://www.nasa.gov/sites/default/files/styles/image_card_4x3_ratio/public/thumbnails/image/leisa_christmas_false_color.png?itok=Jxf0IlS4", "ca")));
     return "message bot";
 });
 
+// Main
 Route::post("/webhook", function (Request $request) {
 
     Log::info(serialize($request->all()));
@@ -123,6 +132,7 @@ Route::post("/webhook", function (Request $request) {
     return response(null, 200);
 });
 
+// Verify webhook connection
 Route::get("/webhook", function (Request $request) {
     if ($request->get("hub_verify_token") === VERIFY_TOKEN) {
         return $request->get("hub_challenge");
