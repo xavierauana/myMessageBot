@@ -36,18 +36,11 @@ function replyMessage($incomingMessage)
 
     $data = new Req($senderId, "image", "https://www.nasa.gov/sites/default/files/styles/image_card_4x3_ratio/public/thumbnails/image/leisa_christmas_false_color.png?itok=Jxf0IlS4");
 
-
-    $messageData = createMessageData();
-
-//    $data = [
-//        "recipient" => ["id" => $senderId],
-//        "message"   => $messageData
-//    ];
-
     $options = [
         'content-type' => "application/json; charset=utf8",
         'query'        => ['access_token' => PAGE_TOKEN]
     ];
+
     $body = json_encode($data);
 
     $client = new \GuzzleHttp\Client();
@@ -65,53 +58,8 @@ function replyMessage($incomingMessage)
     $promise->wait();
 }
 
-function createMessageData(): array
-{
-    return [
-        "attachment" => [
-            "type"    => "template",
-            "payload" => [
-                "template_type" => "generic",
-                "elements"      => [
-                    [
-                        "title"     => "First card",
-                        "subtitle"  => "Element #1 of an hscroll",
-                        "image_url" => "http://messengerdemo.parseapp.com/img/rift.png",
-                        "buttons"   => [
-                            [
-                                "type"  => "web_url",
-                                "url"   => "https://www.messenger.com/",
-                                "title" => "Web url"
-                            ],
-                            [
-                                "type"    => "postback",
-                                "title"   => "Postback",
-                                "payload" => "Payload for first element in a generic bubble",
-                            ]
-                        ]
-                    ],
-                    [
-                        "title"     => "Second card",
-                        "subtitle"  => "Element #2 of an hscroll",
-                        "image_url" => "http://messengerdemo.parseapp.com/img/gearvr.png",
-                        "buttons"   => [
-                            [
-
-                                "type"    => "postback",
-                                "title"   => "Postback",
-                                "payload" => "Payload for second element in a generic bubble",
-                            ]
-                        ],
-                    ]
-                ]
-            ]
-        ]
-    ];
-}
-
 
 Route::get('/', function () {
-    dd(json_encode(new Req(121212121, "image", "https://www.nasa.gov/sites/default/files/styles/image_card_4x3_ratio/public/thumbnails/image/leisa_christmas_false_color.png?itok=Jxf0IlS4", "ca")));
     return "message bot";
 });
 
